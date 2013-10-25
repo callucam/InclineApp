@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal"
+    android:padding="30dip" >
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+        <LinearLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	        <TextView 
+	            android:id="@+id/ship_name_set"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingBottom="20sp"
+	            android:textSize="40sp"
+	            android:text="@string/ship_name" />
+	        
+	        <TextView 
+	            android:id="@+id/project_info"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingBottom="10sp"
+	            android:textSize="30sp"
+	            android:text="@string/project_subtitle" />
+	        
+	        <LinearLayout 
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal"
+	            android:padding="10dip"
+	            android:gravity="center_horizontal" >
+	            <TextView 
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/units" />
+		        <Spinner
+		            android:id="@+id/units_spinner"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content" />
+	        </LinearLayout>
+	        
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/project_number" />
+	        <EditText 
+	            android:id="@+id/project_number"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="text" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/client" />
+	        <EditText 
+	            android:id="@+id/client"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="text" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/ship_type" />
+	        <EditText 
+	            android:id="@+id/ship_type"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="text" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/exp_date" />
+	        <EditText 
+	            android:id="@+id/exp_date"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="datetime" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/attend" />
+	        <EditText 
+	            android:id="@+id/attend"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="text" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/weather" />
+	        <EditText 
+	            android:id="@+id/weather"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="text" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/des_displ" />
+	        <EditText 
+	            android:id="@+id/displ"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="text" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/ship_head" />
+	        <EditText 
+	            android:id="@+id/ship_head"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="text" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/ship_free" />
+	        <EditText 
+	            android:id="@+id/ship_free"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="text" />
+	        
+	        <TextView 
+	            android:id="@+id/weights_info"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingBottom="10sp"
+	            android:textSize="30sp"
+	            android:text="@string/weights_subtitle" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/dim_wht" />
+	        <EditText 
+	            android:id="@+id/dim_wht"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="text" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/mass_whta"
+	            android:id="@+id/mass_whta_label" />
+	        <EditText 
+	            android:id="@+id/mass_whta"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="number|numberDecimal" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/mass_whtb"
+	            android:id="@+id/mass_whtb_label" />
+	        <EditText 
+	            android:id="@+id/mass_whtb"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="number|numberDecimal" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/mass_whtc"
+	            android:id="@+id/mass_whtc_label" />
+	        <EditText 
+	            android:id="@+id/mass_whtc"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="number|numberDecimal" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/mass_whtd"
+	            android:id="@+id/mass_whtd_label" />
+	        <EditText 
+	            android:id="@+id/mass_whtd"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="number|numberDecimal" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/dist_whta"
+	            android:id="@+id/dist_whta_label" />
+	        <EditText 
+	            android:id="@+id/dist_whta"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="number|numberDecimal" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/dist_whtb"
+	            android:id="@+id/dist_whtb_label" />
+	        <EditText 
+	            android:id="@+id/dist_whtb"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="number|numberDecimal" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/dist_whtc"
+	            android:id="@+id/dist_whtc_label" />
+	        <EditText 
+	            android:id="@+id/dist_whtc"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="number|numberDecimal" />
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/dist_whtd"
+	            android:id="@+id/dist_whtd_label" />
+	        <EditText 
+	            android:id="@+id/dist_whtd"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="number|numberDecimal" />
+	    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

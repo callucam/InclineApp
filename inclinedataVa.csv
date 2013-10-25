@@ -1,0 +1,2 @@
+_id,date,shipname,units,projectnumber,shiptype,experimentdate,weather,displacement,windheading,shipfreetoincline,inattendance,client,numwht,dimensionweight,massweight,distanceweightsmoved,angleB,angleC,angleD,angleE,angleF,angleG,angleH,angleI,gravX,gravY,gravZ,fwdpt,fwdstbd,midpt,midstbd,aftpt,aftstbd,calculateddisplacement,gmt,kmt,kg
+1,29-Aug-12,Dredge Pipe Float,0,032-007,Float,d,Fair,7.8 mt,N/A,Y,IS,AMEC,4,1x1x1 m3,1000,3,5.6,10.9,5.6,0,5.6,10.9,5.6,0,0,0,0,0.506,0.506,0.506,0.506,0.506,0.506,,,,

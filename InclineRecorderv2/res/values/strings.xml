@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Incline Recorder v2</string>
+    <string name="main_title">Incline Recorder v2</string>
+    
+    <string name="new_boat_label">New</string>
+    <string name="load_boat_label">Load</string>
+    <string name="export_label">Export</string>
+    <string name="import_label">Import</string>
+    
+    <string name="newship_title">New Ship</string>
+    <string name="confirm_label">Confirm</string>
+    
+    <string name="loadship_title">Load Ship</string>
+    <string name="empty">No Ships Loaded</string>
+    <string name="menu_delete">Delete Ship</string>
+    
+    <string name="info_title">Info</string>
+    <string name="project_subtitle">Project Info</string>
+    <string name="weights_subtitle">Weights Info</string>
+    
+    <string name="ship_name">Ship Name</string>
+    <string name="units">Units</string>
+    <string name="project_number">Project Number</string>
+    <string name="ship_type">Type of Ship</string>
+    <string name="exp_date">Experiment Date</string>
+    <string name="weather">Weather</string>
+    <string name="des_displ">Design Displacement</string>
+    <string name="ship_head">Ship Heading wrt Wind</string>
+    <string name="ship_free">Ship Free to Incline?</string>
+    <string name="attend">People in Attendence</string>
+    <string name="client">Client</string>
+    
+    <string-array name="units_array">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
+    
+    <string name="dim_wht">Dimensions of Weights</string>
+    <string name="mass_whta">Mass of Weight A</string>
+    <string name="mass_whtb">Mass of Weight B</string>
+    <string name="mass_whtc">Mass of Weight C</string>
+    <string name="mass_whtd">Mass of Weight D</string>
+    <string name="dist_whta">Moment Arm Length A</string>
+    <string name="dist_whtb">Moment Arm Length B</string>
+    <string name="dist_whtc">Moment Arm Length C</string>
+    <string name="dist_whtd">Moment Arm Length D</string>
+    
+    <string name="experiment_title">Experiment</string>
+    <string name="condA_label">Cond. A</string>
+    <string name="condB_label">Cond. B</string>
+    <string name="condC_label">Cond. C</string>
+    <string name="condD_label">Cond. D</string>
+    <string name="condE_label">Cond. E</string>
+    <string name="condF_label">Cond. F</string>
+    <string name="condG_label">Cond. G</string>
+    <string name="condH_label">Cond. H</string>
+    <string name="condI_label">Cond. I</string>
+    <string name="exp_description_left">
+        Cond. A: \n
+        Cond. B: \n
+        Cond. C: \n
+        Cond. D: \n
+        Cond. E: \n
+        Cond. F: \n
+        Cond. G: \n
+        Cond. H: \n
+        Cond. I: \n
+    </string>
+    <string name="exp_description_right">
+        Initial Reference\n
+        Weight A to Port\n
+        Weight B to Port\n
+        Weight B to Starboard\n
+        Weight A to Starboard\n
+        Weight C to Starboard\n
+        Weight D to Starboard\n
+        Weight D to Port\n
+        Weight C to Port\n
+    </string>
+    
+    <string name="drafts_title">Lightship Drafts</string>
+    <string name="fwdpt_draft">Forward Port</string>
+    <string name="fwdstbd_draft">Forward Starboard</string>
+    <string name="midpt_draft">Amidships Port</string>
+    <string name="midstbd_draft">Amidships Starboard</string>
+    <string name="aftpt_draft">Aft Port</string>
+    <string name="aftstbd_draft">Aft Starboard</string>
+    
+    <string name="analysis_title">Analysis</string>
+    <string name="calc_displ">Calculated Displacement: </string>
+    <string name="gmt">GMt: </string>
+    <string name="kmt">KMt: </string>
+    <string name="kg">KG: </string>
+    
+    <string name="import_hydrostatics_label">Load Hydrostatics</string>
+    <string name="analyze_label">Analyze</string>
+
+</resources>
