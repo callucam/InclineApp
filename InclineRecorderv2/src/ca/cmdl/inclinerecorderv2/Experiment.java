@@ -21,6 +21,7 @@ public class Experiment extends Activity implements OnClickListener, SensorEvent
 	private SensorManager mSensorManager;
 	private Sensor mAccel;
 	private TextView curAngle_output;
+	private TextView curAngle_output1;
 	private TextView condA_output;
 	private TextView condB_output;
 	private TextView condC_output;
@@ -37,6 +38,8 @@ public class Experiment extends Activity implements OnClickListener, SensorEvent
 	// Array of current gravity vector
 	private double[] gravity = new double[3];
 	// Array of gravity vectors for each condition
+	private double[] gravity1 = new double[3];
+	
 	private double[][] condGravity = new double[9][3];
 	// Array of angles for each condition
 	private double[] condAngle = new double[9];
@@ -58,6 +61,7 @@ public class Experiment extends Activity implements OnClickListener, SensorEvent
         
         // Condition angle indicating text views
         curAngle_output = (TextView) findViewById(R.id.curAngle_output);
+        curAngle_output1 = (TextView) findViewById(R.id.curAngle_output1);
         condA_output = (TextView) findViewById(R.id.condA_output);
         condB_output = (TextView) findViewById(R.id.condB_output);
         condC_output = (TextView) findViewById(R.id.condC_output);
@@ -177,6 +181,50 @@ public class Experiment extends Activity implements OnClickListener, SensorEvent
     		double angle_deg = Math.toDegrees(angle_rad);
     		curAngle_output.setText("Current angle: " + String.format("%1.4f", angle_deg));
     	}
+    	
+    	
+    	
+if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+    		
+    		// Extract gravity vector and apply low pass filter to isolate gravity
+    		gravity1[0] = alpha * gravity1[0] + (1 - alpha) * event.values[0];
+    		gravity1[1] = alpha * gravity1[1] + (1 - alpha) * event.values[1];
+    		gravity1[2] = alpha * gravity1[2] + (1 - alpha) * event.values[2];
+    		
+    		// Display current angle
+    		double angle_rad = Geometry.computeAngle(origin, condGravity[0], gravity1);
+    		double angle_deg = Math.toDegrees(angle_rad);
+//    		curAngle_output1.setText("Current angle1: " + String.format("%1.4f", gravity1[0]));
+    		condA_output.setText(String.format("%1.4f", gravity1[0]));
+    	}
+    	
+if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+	
+	// Extract gravity vector and apply low pass filter to isolate gravity
+	gravity1[0] = alpha * gravity1[0] + (1 - alpha) * event.values[0];
+	gravity1[1] = alpha * gravity1[1] + (1 - alpha) * event.values[1];
+	gravity1[2] = alpha * gravity1[2] + (1 - alpha) * event.values[2];
+	
+	// Display current angle
+	double angle_rad = Geometry.computeAngle(origin, condGravity[0], gravity1);
+	double angle_deg = Math.toDegrees(angle_rad);
+//	curAngle_output1.setText("Current angle1: " + String.format("%1.4f", gravity1[0]));
+	condB_output.setText(String.format("%1.4f", gravity1[1]));
+}
+if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+	
+	// Extract gravity vector and apply low pass filter to isolate gravity
+	gravity1[0] = alpha * gravity1[0] + (1 - alpha) * event.values[0];
+	gravity1[1] = alpha * gravity1[1] + (1 - alpha) * event.values[1];
+	gravity1[2] = alpha * gravity1[2] + (1 - alpha) * event.values[2];
+	
+	// Display current angle
+	double angle_rad = Geometry.computeAngle(origin, condGravity[0], gravity1);
+	double angle_deg = Math.toDegrees(angle_rad);
+//	curAngle_output1.setText("Current angle1: " + String.format("%1.4f", gravity1[0]));
+	condC_output.setText(String.format("%1.4f", gravity1[2]));
+}   	
+    	
     }
     
     public void onClick(View v) {
