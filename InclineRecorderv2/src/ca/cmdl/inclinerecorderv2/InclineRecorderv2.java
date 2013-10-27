@@ -24,15 +24,15 @@ public class InclineRecorderv2 extends TabActivity {
         TabHost.TabSpec spec;  // Reusable TabSpec for each tab
         Intent intent;  // Reusable Intent for each tab
 
-        // Create an Intent to launch the Info tab
-        intent = new Intent().setClass(this, Info.class);
-        //intent.putExtra(InclineData.ROWID, mRowId);
-
-        // Initialize a TabSpec for each tab and add it to the TabHost
-        spec = tabHost.newTabSpec("info").setIndicator("Info",
-                          res.getDrawable(R.drawable.boat_icon))
-                      .setContent(intent);
-        tabHost.addTab(spec);
+//        // Create an Intent to launch the Info tab
+//        intent = new Intent().setClass(this, Info.class);
+//        //intent.putExtra(InclineData.ROWID, mRowId);
+//
+//        // Initialize a TabSpec for each tab and add it to the TabHost
+//        spec = tabHost.newTabSpec("info").setIndicator("Info",
+//                          res.getDrawable(R.drawable.boat_icon))
+//                      .setContent(intent);
+//        tabHost.addTab(spec);
 
         // Do the same the Experiment tab
         intent = new Intent().setClass(this, Experiment.class);
@@ -41,19 +41,19 @@ public class InclineRecorderv2 extends TabActivity {
                       .setContent(intent);
         tabHost.addTab(spec);
         
-        // Do the same the Drafts tab
-        intent = new Intent().setClass(this, Drafts.class);
-        spec = tabHost.newTabSpec("drafts").setIndicator("Drafts",
-                          res.getDrawable(R.drawable.boat_icon))
-                      .setContent(intent);
-        tabHost.addTab(spec);
-        
-        // Do the same the Analysis tab
-        intent = new Intent().setClass(this, Analysis.class);
-        spec = tabHost.newTabSpec("analysis").setIndicator("Analysis",
-                          res.getDrawable(R.drawable.boat_icon))
-                      .setContent(intent);
-        tabHost.addTab(spec);
+//        // Do the same the Drafts tab
+//        intent = new Intent().setClass(this, Drafts.class);
+//        spec = tabHost.newTabSpec("drafts").setIndicator("Drafts",
+//                          res.getDrawable(R.drawable.boat_icon))
+//                      .setContent(intent);
+//        tabHost.addTab(spec);
+//        
+//        // Do the same the Analysis tab
+//        intent = new Intent().setClass(this, Analysis.class);
+//        spec = tabHost.newTabSpec("analysis").setIndicator("Analysis",
+//                          res.getDrawable(R.drawable.boat_icon))
+//                      .setContent(intent);
+//        tabHost.addTab(spec);
 
         tabHost.setCurrentTab(0);
     }

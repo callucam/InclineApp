@@ -50,6 +50,7 @@ public class Experiment extends Activity implements OnClickListener, SensorEvent
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.experiment);
+		
 		mIncline = new InclineData(this);
 		
 		// Extract the current new or loaded ship id from the intent

@@ -51,7 +51,7 @@ public final class R {
         public static final int condH_output=0x7f06001f;
         public static final int condI_button=0x7f06001d;
         public static final int condI_output=0x7f060020;
-        public static final int confirm=0x7f060046;
+        public static final int confirm=0x7f060047;
         public static final int curAngle_output=0x7f06000d;
         public static final int curAngle_output1=0x7f06000e;
         public static final int dim_wht=0x7f060030;
@@ -90,10 +90,11 @@ public final class R {
         public static final int project_number=0x7f060026;
         public static final int ship_free=0x7f06002e;
         public static final int ship_head=0x7f06002d;
-        public static final int ship_name_edit=0x7f060045;
+        public static final int ship_name_edit=0x7f060046;
         public static final int ship_name_set=0x7f060023;
-        public static final int ship_row=0x7f060047;
+        public static final int ship_row=0x7f060048;
         public static final int ship_type=0x7f060028;
+        public static final int textView1=0x7f060045;
         public static final int units_spinner=0x7f060025;
         public static final int weather=0x7f06002b;
         public static final int weights_info=0x7f06002f;

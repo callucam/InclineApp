@@ -23,171 +23,346 @@ import android.view.View.OnClickListener;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
-public class Intro extends Activity implements OnClickListener {
+import java.util.Arrays;
+
+import no.geosoft.cc.geometry.Geometry;
+import android.app.Activity;
+import android.database.Cursor;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
+
+public class Intro extends Activity implements OnClickListener, SensorEventListener {
 	
+	private SensorManager mSensorManager;
+	private Sensor mAccel;
+	private TextView curAngle_output;
+	private TextView curAngle_output1;
+	private TextView condA_output;
+	private TextView condB_output;
+	private TextView condC_output;
+	private TextView condD_output;
+	private TextView condE_output;
+	private TextView condF_output;
+	private TextView condG_output;
+	private TextView condH_output;
+	private TextView condI_output;
+	// Alpha seek bar and variable
+	private SeekBar alpha_bar;
+	private TextView alpha_value;
+	private float alpha;
+	// Array of current gravity vector
+	private double[] gravity = new double[3];
+	// Array of gravity vectors for each condition
+	private double[] gravity1 = new double[3];
+	
+	private double[][] condGravity = new double[9][3];
+	// Array of angles for each condition
+	private double[] condAngle = new double[9];
+	// Database variables
+	private Long mRowId;
 	private InclineData mIncline;
 	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	   
+    public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.intro);
-		mIncline = new InclineData(this);
+		setContentView(R.layout.experiment);
 		
-		View newButton = findViewById(R.id.new_button);
-	    newButton.setOnClickListener(this);
-	    View loadButton = findViewById(R.id.load_button);
-	    loadButton.setOnClickListener(this);
-	    View exportButton = findViewById(R.id.export_button);
-	    exportButton.setOnClickListener(this);
-	    View importButton = findViewById(R.id.import_button);
-	    importButton.setOnClickListener(this);
+		//mIncline = new InclineData(this);
+		
+		// Extract the current new or loaded ship id from the intent
+		//mRowId = InclineRecorderv2.CURRENT_ROWID;
+		
+		// Accelerometer manager
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mAccel = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        
+        // Condition angle indicating text views
+        curAngle_output = (TextView) findViewById(R.id.curAngle_output);
+        curAngle_output1 = (TextView) findViewById(R.id.curAngle_output1);
+        condA_output = (TextView) findViewById(R.id.condA_output);
+        condB_output = (TextView) findViewById(R.id.condB_output);
+        condC_output = (TextView) findViewById(R.id.condC_output);
+        condD_output = (TextView) findViewById(R.id.condD_output);
+        condE_output = (TextView) findViewById(R.id.condE_output);
+        condF_output = (TextView) findViewById(R.id.condF_output);
+        condG_output = (TextView) findViewById(R.id.condG_output);
+        condH_output = (TextView) findViewById(R.id.condH_output);
+        condI_output = (TextView) findViewById(R.id.condI_output);
+        
+        // Condition angle set buttons
+        View condAButton = findViewById(R.id.condA_button);
+        condAButton.setOnClickListener(this);
+        View condBButton = findViewById(R.id.condB_button);
+        condBButton.setOnClickListener(this);
+        View condCButton = findViewById(R.id.condC_button);
+        condCButton.setOnClickListener(this);
+        View condDButton = findViewById(R.id.condD_button);
+        condDButton.setOnClickListener(this);
+        View condEButton = findViewById(R.id.condE_button);
+        condEButton.setOnClickListener(this);
+        View condFButton = findViewById(R.id.condF_button);
+        condFButton.setOnClickListener(this);
+        View condGButton = findViewById(R.id.condG_button);
+        condGButton.setOnClickListener(this);
+        View condHButton = findViewById(R.id.condH_button);
+        condHButton.setOnClickListener(this);
+        View condIButton = findViewById(R.id.condI_button);
+        condIButton.setOnClickListener(this);
+        
+        // Alpha seek bar listener
+        alpha_bar = (SeekBar) findViewById(R.id.alpha_bar);
+        alpha_value = (TextView) findViewById(R.id.alpha_value);
+        alpha_value.setText("alpha: " + alpha_bar.getProgress());
+        alpha_bar.setOnSeekBarChangeListener(new OnSeekBarChangeListener()
+        {
+
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				
+				// Set alpha and display value
+				alpha = (float) progress/100;
+				alpha_value.setText("alpha: " + progress);
+				
+			}
+
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}
+        	
+        });
+        
+        
+        // Set impossible default value of condAngle to detect if not recorded
+        Arrays.fill(condAngle, 888.88);
+	}
+	
+	@Override
+    protected void onResume() {
+    	super.onResume();
+    	// Start updates from accelerometer
+    	mSensorManager.registerListener(this, mAccel, SensorManager.SENSOR_DELAY_NORMAL);
+    	
+    	// Fill the angle output fields with angles from database (blank if no previous data)
+        //fillFields(mRowId);
+    }
+    
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	// Stop updates from accelerometer
+    	mSensorManager.unregisterListener(this);
+    	
+    	// Open database
+		// mIncline.openDB();
+				
+		// mIncline.updateExperiment(mRowId, 
+		//		condAngle[1], condAngle[2], condAngle[3], condAngle[4], condAngle[5], condAngle[6], condAngle[7],  
+		//		condAngle[8], condGravity[0][0], condGravity[0][1], condGravity[0][2]);
+    }
+
+    
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	@Override
+	protected void onDestroy() {
+		// Close database
+		// mIncline.closeDB();
+		super.onDestroy();
 	}
     
-    // Set up click listeners for all buttons
-    public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.new_button:
-			Intent iNew = new Intent(this, Newship.class);
-    		startActivity(iNew);
-    		break;
-		case R.id.load_button:
-			Intent iLoad = new Intent(this, Loadship.class);
-			startActivity(iLoad);
-			break;
-		case R.id.export_button:
-			exportDB();
-			break;
-		case R.id.import_button:
-			importDB();
-			break;
-		}
-    }
-    
-    // Exports all ships in database as a .csv file in app directory on phone
-    private void exportDB() {
-    	boolean mkdirsResult = false;
+public void onSensorChanged(SensorEvent event) {
+		
+		double[] origin = new double[3];
     	
-    	// Gets path of ship database
-    	File dbFile = getDatabasePath(InclineData.DATABASE_NAME);
+		// Alpha value (smoothing factor) for low pass filter (set by seek bar)
+    	//final float alpha = (float) 0.9;
     	
-    	// Gets path to default external storage directory of device (eg. SD card)
-    	File exportDir = new File(Environment.getExternalStorageDirectory(), "shipData");
-    	
-    	// Creates new directory if necessary
-    	if (!exportDir.exists()) {
-    		mkdirsResult = exportDir.mkdirs();
+    	// Check if proper event
+    	if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+    		
+    		// Extract gravity vector and apply low pass filter to isolate gravity
+    		gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0];
+    		gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
+    		gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2];
+    		
+    		// Display current angle
+    		double angle_rad = Geometry.computeAngle(origin, condGravity[0], gravity);
+    		double angle_deg = Math.toDegrees(angle_rad);
+    		curAngle_output.setText("Current angle: " + String.format("%1.4f", angle_deg));
     	}
     	
-    	// Creates new file object
-    	File file = new File(exportDir, InclineData.TABLE_NAME + ".csv");
     	
-    	ResultSet rs = null;
     	
-    	Connection con = null;
-    	
-    	try {
-    		// Delete old .csv file and create a new one
-    		if (file.isFile()) {
-    			file.delete();
-    		}
-    		file.createNewFile();
+if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
     		
-    		// Load driver class
-    		Class.forName("org.sqldroid.SQLDroidDriver").newInstance();
-    	    // Connect to SQLite
-    	    con = DriverManager.getConnection("jdbc:sqldroid:" + dbFile.getPath());
+    		// Extract gravity vector and apply low pass filter to isolate gravity
+    		gravity1[0] = alpha * gravity1[0] + (1 - alpha) * event.values[0];
+    		gravity1[1] = alpha * gravity1[1] + (1 - alpha) * event.values[1];
+    		gravity1[2] = alpha * gravity1[2] + (1 - alpha) * event.values[2];
     		
-    		// Build the ResultSet
-    		Statement stmt = con.createStatement();
-    		rs = stmt.executeQuery("SELECT * FROM " + InclineData.TABLE_NAME);
-    		
-    		// Writes database to .csv file
-    		CSVWriter writer = new CSVWriter(new FileWriter(file));
-    		ArrayList<String[]> strTable = new ArrayList<String[]>();
-    		ResultSetMetaData rsmd = rs.getMetaData();
-    		int columns = rsmd.getColumnCount();
-    		
-    		String[] colNames = new String[columns];
-    		for (int i = 0; i < columns; i++) {
-    			colNames[i] = rsmd.getColumnName(i+1);
-    		}
-    		strTable.add(colNames);
-    		
-    		while(rs.next()){
-    			String[] line = new String[columns];
-    			for (int i = 0; i < columns; i++) {
-    				line[i] = rs.getString(i+1);
-    			}
-    			strTable.add(line);
-    		}
-    		
-    		writer.writeAll(strTable);
-    		writer.close();
+    		// Display current angle
+    		double angle_rad = Geometry.computeAngle(origin, condGravity[0], gravity1);
+    		double angle_deg = Math.toDegrees(angle_rad);
+//    		curAngle_output1.setText("Current angle1: " + String.format("%1.4f", gravity1[0]));
+    		condA_output.setText(String.format("%1.4f", gravity1[0]));
     	}
-    	catch (Exception ex) {
-    		Log.e("CSVWriter", ex.getMessage());
-    	}
-    	finally {
-    		if (rs !=null) {
-    			try {
-    				rs.close();
-    			}
-    			catch (SQLException ex) {
-    				Log.e("ResultSet Close", ex.getMessage());
-    			}
-    		}
-    	}
-    }
-    
-    private void importDB() {
     	
-    	// Gets path of ship database
-    	File dbFile = getDatabasePath(InclineData.DATABASE_NAME);
-    	
-    	// Gets path to default external storage directory of device (eg. SD card)
-    	File exportDir = new File(Environment.getExternalStorageDirectory(), "shipData");
-    	
-    	// Creates new file object
-    	File file = new File(exportDir, InclineData.TABLE_NAME + ".csv");
-    	
-    	// Creates list of strings to store data
-    	List<String[]> strTable = new ArrayList<String[]>();
-    	
-    	try {
-    		// Load driver class
-    		Class.forName("org.sqldroid.SQLDroidDriver").newInstance();
-    	    // Connect to SQLite
-    		Connection con = null;
-    	    con = DriverManager.getConnection("jdbc:sqldroid:" + dbFile.getPath());
-    		Statement stmt = con.createStatement();
-    		
-    		// Delete all rows
-    		mIncline.openDB();
-    		mIncline.clearDB();
-    		
-    		// Reads database to .csv file
-    		CSVReader reader = new CSVReader(new FileReader(file));
-    		
-    		// Read line with column headers
-    		String[] columnHeaders = reader.readNext();
-    		
-    		String[] nextLine;
-    		
-    		while((nextLine = reader.readNext()) != null){
-    			int numCols = nextLine.length;
-    			ContentValues args = new ContentValues();
-    			for (int i = 0; i < (numCols); i++) {
-    				args.put(columnHeaders[i], nextLine[i]);
-    			}
-    			// Insert line into database
-    			mIncline.importShip(args);
-    		}
-    		
-    		reader.close();    		
-    	}
-    	catch (Exception ex) {
-    		Log.e("CSVReader", ex.getMessage());
-    	}
+if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+	
+	// Extract gravity vector and apply low pass filter to isolate gravity
+	gravity1[0] = alpha * gravity1[0] + (1 - alpha) * event.values[0];
+	gravity1[1] = alpha * gravity1[1] + (1 - alpha) * event.values[1];
+	gravity1[2] = alpha * gravity1[2] + (1 - alpha) * event.values[2];
+	
+	// Display current angle
+	double angle_rad = Geometry.computeAngle(origin, condGravity[0], gravity1);
+	double angle_deg = Math.toDegrees(angle_rad);
+//	curAngle_output1.setText("Current angle1: " + String.format("%1.4f", gravity1[0]));
+	condB_output.setText(String.format("%1.4f", gravity1[1]));
+}
+if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+	
+	// Extract gravity vector and apply low pass filter to isolate gravity
+	gravity1[0] = alpha * gravity1[0] + (1 - alpha) * event.values[0];
+	gravity1[1] = alpha * gravity1[1] + (1 - alpha) * event.values[1];
+	gravity1[2] = alpha * gravity1[2] + (1 - alpha) * event.values[2];
+	
+	// Display current angle
+	double angle_rad = Geometry.computeAngle(origin, condGravity[0], gravity1);
+	double angle_deg = Math.toDegrees(angle_rad);
+//	curAngle_output1.setText("Current angle1: " + String.format("%1.4f", gravity1[0]));
+	condC_output.setText(String.format("%1.4f", gravity1[2]));
+}   	
     	
     }
+	
+public void onClick(View v) {
+	
+//	double[] origin = new double[3];
+//	double angle_rad, angle_deg;
+//	
+//	switch (v.getId()) {
+//	case R.id.condA_button:
+//		// Record first gravity vector
+//		System.arraycopy(gravity, 0, condGravity[0], 0, 3);
+//		// Indicate that vector is recorded
+//		condA_output.setText("Set");
+//		break;
+//		
+//	case R.id.condB_button:
+//		// Set gravity vector
+//		System.arraycopy(gravity, 0, condGravity[1], 0, 3);
+//		// Compute angle in degrees relative to condition A
+//		angle_rad = Geometry.computeAngle(origin, condGravity[0], condGravity[1]);
+//		angle_deg = Math.toDegrees(angle_rad);
+//		// Display angle below button
+//		condB_output.setText(String.format("%1.2f", angle_deg));
+//		// Save angle to condAngle
+//		condAngle[1] = angle_deg;
+//		break;
+//		
+//	case R.id.condC_button:
+//		// Set gravity vector
+//		System.arraycopy(gravity, 0, condGravity[2], 0, 3);
+//		// Compute angle in degrees relative to condition A
+//		angle_rad = Geometry.computeAngle(origin, condGravity[0], condGravity[2]);
+//		angle_deg = Math.toDegrees(angle_rad);
+//		// Display angle below button
+//		condC_output.setText(String.format("%1.2f", angle_deg));
+//		// Save angle to condAngle
+//		condAngle[2] = angle_deg;
+//		break;
+//		
+//	case R.id.condD_button:
+//		// Set gravity vector
+//		System.arraycopy(gravity, 0, condGravity[3], 0, 3);
+//		// Compute angle in degrees relative to condition A
+//		angle_rad = Geometry.computeAngle(origin, condGravity[0], condGravity[3]);
+//		angle_deg = Math.toDegrees(angle_rad);
+//		// Display angle below button
+//		condD_output.setText(String.format("%1.2f", angle_deg));
+//		// Save angle to condAngle
+//		condAngle[3] = angle_deg;
+//		break;
+//		
+//	case R.id.condE_button:
+//		// Set gravity vector
+//		System.arraycopy(gravity, 0, condGravity[4], 0, 3);
+//		// Compute angle in degrees relative to condition A
+//		angle_rad = Geometry.computeAngle(origin, condGravity[0], condGravity[4]);
+//		angle_deg = Math.toDegrees(angle_rad);
+//		// Display angle below button
+//		condE_output.setText(String.format("%1.2f", angle_deg));
+//		// Save angle to condAngle
+//		condAngle[4] = angle_deg;
+//		break;
+//		
+//	case R.id.condF_button:
+//		// Set gravity vector
+//		System.arraycopy(gravity, 0, condGravity[5], 0, 3);
+//		// Compute angle in degrees relative to condition A
+//		angle_rad = Geometry.computeAngle(origin, condGravity[0], condGravity[5]);
+//		angle_deg = Math.toDegrees(angle_rad);
+//		// Display angle below button
+//		condF_output.setText(String.format("%1.2f", angle_deg));
+//		// Save angle to condAngle
+//		condAngle[5] = angle_deg;
+//		break;
+//		
+//	case R.id.condG_button:
+//		// Set gravity vector
+//		System.arraycopy(gravity, 0, condGravity[6], 0, 3);
+//		// Compute angle in degrees relative to condition A
+//		angle_rad = Geometry.computeAngle(origin, condGravity[0], condGravity[6]);
+//		angle_deg = Math.toDegrees(angle_rad);
+//		// Display angle below button
+//		condG_output.setText(String.format("%1.2f", angle_deg));
+//		// Save angle to condAngle
+//		condAngle[6] = angle_deg;
+//		break;
+//		
+//	case R.id.condH_button:
+//		// Set gravity vector
+//		System.arraycopy(gravity, 0, condGravity[7], 0, 3);
+//		// Compute angle in degrees relative to condition A
+//		angle_rad = Geometry.computeAngle(origin, condGravity[0], condGravity[7]);
+//		angle_deg = Math.toDegrees(angle_rad);
+//		// Display angle below button
+//		condH_output.setText(String.format("%1.2f", angle_deg));
+//		// Save angle to condAngle
+//		condAngle[7] = angle_deg;
+//		break;
+//		
+//	case R.id.condI_button:
+//		// Set gravity vector
+//		System.arraycopy(gravity, 0, condGravity[8], 0, 3);
+//		// Compute angle in degrees relative to condition A
+//		angle_rad = Geometry.computeAngle(origin, condGravity[0], condGravity[8]);
+//		angle_deg = Math.toDegrees(angle_rad);
+//		// Display angle below button
+//		condI_output.setText(String.format("%1.2f", angle_deg));
+//		// Save angle to condAngle
+//		condAngle[8] = angle_deg;
+//		break;
+//	}    		
+}
+	
 }
