@@ -256,16 +256,16 @@ if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 	
 public void onClick(View v) {
 	
-//	double[] origin = new double[3];
-//	double angle_rad, angle_deg;
-//	
-//	switch (v.getId()) {
-//	case R.id.condA_button:
-//		// Record first gravity vector
-//		System.arraycopy(gravity, 0, condGravity[0], 0, 3);
-//		// Indicate that vector is recorded
-//		condA_output.setText("Set");
-//		break;
+	double[] origin = new double[3];
+	double angle_rad, angle_deg;
+	
+	switch (v.getId()) {
+	case R.id.condA_button:
+		// Record first gravity vector
+		System.arraycopy(gravity, 0, condGravity[0], 0, 3);
+		// Indicate that vector is recorded
+		condA_output.setText("Set");
+		break;
 //		
 //	case R.id.condB_button:
 //		// Set gravity vector
@@ -362,7 +362,7 @@ public void onClick(View v) {
 //		// Save angle to condAngle
 //		condAngle[8] = angle_deg;
 //		break;
-//	}    		
+	}    		
 }
 	
 }
